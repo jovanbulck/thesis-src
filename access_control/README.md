@@ -16,4 +16,7 @@ sfs interface
 structured through ANSI color escape codes that should be interpreted by a
 terminal e.g. `cat log.txt`)
 
+* __inode_prototype__: contains the source code of an abandoned inode-based file
+system prototype
+
 * ./benchmark.h and ./common.h are utility headers

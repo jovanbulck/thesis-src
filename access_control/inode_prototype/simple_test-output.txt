@@ -1,0 +1,68 @@
+
+---------------
+main started
+I have id 0
+[simple-test] making new file system
+    [file-sys] f_mkfs
+	[basic-file-sys] mkfs - init the in-memory disk usage bitmap
+	[basic-file-sys] mkfs - bulk erasing the disk
+		[flash-disk-driver]: disk_bulk_erase (busy waiting for completion)
+	[basic-file-sys] mkfs - init the on-disk inode-table in_use field
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 0
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 16
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 32
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 48
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 64
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 80
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 96
+		[flash-disk-driver]: writing byte-value '0x4e' to addr 112
+[simple-test] dumping init inode table
+	[basic-file-sys] dump_inode_table with INODE_SIZE=16 MAX_NB_INODES=8 INODE_TABLE_SIZE=128
+		[flash-disk-driver]: reading 128 chars from addr 0
+-----------------------------------------
+inode_layout:	IU| SIZE| SMID  P  D| SMID  P  D| B  B  B  B  D
+inode_nb 1:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 2:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 3:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 4:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 5:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 6:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 7:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 8:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+-----------------------------------------
+[simple-test] creating a file with inode_nb 5
+  [file-sys] f_creat
+	[basic-file-sys] init_inode - validate inode is not already in use
+		[flash-disk-driver]: reading from addr 64; byte-value is '0x4e'
+	[basic-file-sys] init_inode - marking as used
+		[flash-disk-driver]: writing byte-value '0x59' to addr 64
+	[basic-file-sys] init_inode - zeroing size
+		[flash-disk-driver]: writing byte-value '0x0' to addr 65
+		[flash-disk-driver]: writing byte-value '0x0' to addr 66
+	[basic-file-sys] init_inode - init specified permissions
+		[flash-disk-driver]: writing byte-value '0x0' to addr 67
+		[flash-disk-driver]: writing byte-value '0x0' to addr 68
+		[flash-disk-driver]: writing byte-value '0xff' to addr 69
+	[basic-file-sys] init_inode - disable all other permissions
+		[flash-disk-driver]: writing byte-value '0x0' to addr 73
+	[basic-file-sys] init_inode - init nil data blocks
+		[flash-disk-driver]: writing byte-value '0x21' to addr 75
+		[flash-disk-driver]: writing byte-value '0x21' to addr 76
+		[flash-disk-driver]: writing byte-value '0x21' to addr 77
+		[flash-disk-driver]: writing byte-value '0x21' to addr 78
+[simple-test] dumping inode table after f_creat
+	[basic-file-sys] dump_inode_table with INODE_SIZE=16 MAX_NB_INODES=8 INODE_TABLE_SIZE=128
+		[flash-disk-driver]: reading 128 chars from addr 0
+-----------------------------------------
+inode_layout:	IU| SIZE| SMID  P  D| SMID  P  D| B  B  B  B  D
+inode_nb 1:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 2:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 3:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 4:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 5:		5f 00 00 00 00 ff 00 00 00 00 00 21 21 21 21 00 
+inode_nb 6:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 7:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+inode_nb 8:		4e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+-----------------------------------------
+main done
+-----------------
