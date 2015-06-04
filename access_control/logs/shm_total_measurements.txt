@@ -1,0 +1,42 @@
+
+---------------
+main started
+
+==================== PING ====================
+number of cycles for sfs_ping_1st is 348891
+number of cycles for sfs_ping_2nd is 211
+
+==================== INIT ====================
+number of cycles for sfs_init_1st is 1674
+number of cycles for sfs_init_2nd is 217
+
+==================== CREAT ====================
+number of cycles for sfs_creat is 435
+
+==================== OPEN ====================
+number of cycles for sfs_open is 1747
+number of cycles for sfs_open_2nd is 1070
+
+==================== SEEK ====================
+number of cycles for sfs_seek is 489
+
+==================== GETC ====================
+number of cycles for sfs_getc is 494
+
+==================== PUTC ====================
+number of cycles for sfs_putc is 502
+
+==================== ADD_ACL ====================
+number of cycles for sfs_chmod (add_acl) is 732
+
+==================== REVOKE_ACL ====================
+number of cycles for sfs_chmod (revoke_acl) is 1111
+
+==================== CLOSE ====================
+number of cycles for sfs_close is 617
+number of cycles for sfs_close is 735
+
+==================== REMOVE ====================
+number of cycles for sfs_remove is 1016
+[main] exiting
+-----------------

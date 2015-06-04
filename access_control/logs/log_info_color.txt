@@ -1,0 +1,99 @@
+
+---------------
+main started
+[main] I have id 0
+[clientA] I have id 2
+[0;32m	[sfs-ram] [0mINFO::[1msfs_ping[0m: Hi I was called by SM 2
+[0;32m	[sfs-ram] [0mINFO::and I am SM 1
+
+[clientA] creating a file
+[0;32m	[sfs-ram] [0mINFO::initializing data structures
+[0;32m	[sfs-ram] [0mINFO::[1msfs_creat[0m: new file with name 'a'
+[clientA] assigning B permissions
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'a'
+[clientA] opening the file
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'a'
+Coffee: Reserved 17 pages starting from 1751 for file a
+[clientA] creating a file
+[0;32m	[sfs-ram] [0mINFO::[1msfs_creat[0m: new file with name 'b'
+[clientA] assigning B permissions
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'b'
+[clientA] opening the file
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'b'
+Coffee: Reserved 17 pages starting from 1768 for file b
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+[1m	FILE[0m with name 'b' at 0x554; open_count = 1; next_ptr = 0x54c
+[1m		PERM[0m (2, 0xff) at 0x586; file_ptr = 0x554; next_ptr = 0x58e
+[1m		PERM[0m (3, 0x03) at 0x58e; file_ptr = 0x554; next_ptr = 0
+[1m	FILE[0m with name 'a' at 0x54c; open_count = 1; next_ptr = 0
+[1m		PERM[0m (2, 0xff) at 0x576; file_ptr = 0x54c; next_ptr = 0x57e
+[1m		PERM[0m (3, 0x01) at 0x57e; file_ptr = 0x54c; next_ptr = 0
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x576); (1, 0x586); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] opening and accessing SM B files
+[clientB] I was called by 2 and I have id 3
+[0;32m	[sfs-ram] [0mINFO::[1msfs_ping[0m: Hi I was called by SM 3
+[0;32m	[sfs-ram] [0mINFO::and I am SM 1
+
+[clientB] opening bunch of files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'a'
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'b'
+[clientB] accessing bunch of files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 2
+[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 3
+[0;32m	[sfs-ram] [0mINFO::[1msfs_putc[0m: write a char to file with fd 3
+[clientA] revoking B permissions
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'a'
+[0;32m	[sfs-ram] [0mWARNING::ACL entry currently open; setting to SFS_NIL
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'b'
+[0;32m	[sfs-ram] [0mWARNING::ACL entry currently open; setting to SFS_NIL
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+[1m	FILE[0m with name 'b' at 0x554; open_count = 2; next_ptr = 0x54c
+[1m		PERM[0m (2, 0xff) at 0x586; file_ptr = 0x554; next_ptr = 0x58e
+[1m		PERM[0m (3, 0x00) at 0x58e; file_ptr = 0x554; next_ptr = 0
+[1m	FILE[0m with name 'a' at 0x54c; open_count = 2; next_ptr = 0
+[1m		PERM[0m (2, 0xff) at 0x576; file_ptr = 0x54c; next_ptr = 0x57e
+[1m		PERM[0m (3, 0x00) at 0x57e; file_ptr = 0x54c; next_ptr = 0
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x576); (1, 0x586); (2, 0x57e); (3, 0x58e); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] accessing B files (shouldn't work)
+[clientB] accessing bunch of files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 2
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::permission check failed.
+[0m[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 3
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::permission check failed.
+[0m[0;32m	[sfs-ram] [0mINFO::[1msfs_putc[0m: write a char to file with fd 3
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::permission check failed.
+[0m[clientA] closing b files
+[clientB] closing bunch of files files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 2
+[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 3
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+[1m	FILE[0m with name 'b' at 0x554; open_count = 1; next_ptr = 0x54c
+[1m		PERM[0m (2, 0xff) at 0x586; file_ptr = 0x554; next_ptr = 0x58e
+[1m		PERM[0m (3, 0x00) at 0x58e; file_ptr = 0x554; next_ptr = 0
+[1m	FILE[0m with name 'a' at 0x54c; open_count = 1; next_ptr = 0
+[1m		PERM[0m (2, 0xff) at 0x576; file_ptr = 0x54c; next_ptr = 0x57e
+[1m		PERM[0m (3, 0x00) at 0x57e; file_ptr = 0x54c; next_ptr = 0
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x576); (1, 0x586); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] closing a files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 0
+[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 1
+[clientA] removing files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_remove[0m: trying to remove file 'a'
+[0;32m	[sfs-ram] [0mINFO::[1msfs_remove[0m: trying to remove file 'b'
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x0); (1, 0x0); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] exiting
+[main] exiting
+-----------------

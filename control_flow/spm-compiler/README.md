@@ -1,4 +1,4 @@
-# Modified SPM-compiler files
+## Modified SPM-compiler files
 
 This directory contains all modified files from the Sancus compiler git repo:
 

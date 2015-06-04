@@ -1,0 +1,161 @@
+
+---------------
+main started
+[main] I have id 0
+[clientA] I have id 2
+[0;32m	[sfs-ram] [0mINFO::[1msfs_ping[0m: Hi I was called by SM 2
+[0;32m	[sfs-ram] [0mINFO::and I am SM 1; now calling cfs_ping()
+		[0;36m[coffee] [0mHi from Coffee FS :-)
+		[0;36m[coffee] [0mNow printing flash id:	20 20 15 10 05 73 ff90 09 18 00 47 00 58 20 01 08 22 2a 02 3d 
+[clientA] creating a file
+[0;32m	[sfs-ram] [0mINFO::initializing data structures
+[0;32m	[sfs-ram] [0mDEBUG::struct FILE_PERM size is 8
+[0;32m	[sfs-ram] [0mDEBUG::struct OPEN_FILE size is 8
+[0;32m	[sfs-ram] [0mINFO::[1msfs_creat[0m: new file with name 'a'
+[0;32m	[sfs-ram] [0mDEBUG::removing any existing file of the same name in the back-end
+[clientA] assigning B permissions
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::wanted permission entry for SM 3
+[0;32m	[sfs-ram] [0mDEBUG::and flags 0x1
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x33e; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x368
+[0;32m	[sfs-ram] [0mDEBUG::appending additional ACL entry
+[clientA] opening the file
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'a'
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x33e; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x368
+[0;32m	[sfs-ram] [0mDEBUG::opening file in back-end
+		[0;36m[coffee] [0mReserved 17 pages starting from 102 for file a
+[clientA] creating a file
+[0;32m	[sfs-ram] [0mINFO::[1msfs_creat[0m: new file with name 'b'
+[0;32m	[sfs-ram] [0mDEBUG::removing any existing file of the same name in the back-end
+[clientA] assigning B permissions
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::wanted permission entry for SM 3
+[0;32m	[sfs-ram] [0mDEBUG::and flags 0x3
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x346; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x378
+[0;32m	[sfs-ram] [0mDEBUG::appending additional ACL entry
+[clientA] opening the file
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'b'
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x346; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x378
+[0;32m	[sfs-ram] [0mDEBUG::opening file in back-end
+		[0;36m[coffee] [0mReserved 17 pages starting from 119 for file b
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+[1m	FILE[0m with name 'b' at 0x346; open_count = 1; next_ptr = 0x33e
+[1m		PERM[0m (2, 0xff) at 0x378; file_ptr = 0x346; next_ptr = 0x380
+[1m		PERM[0m (3, 0x03) at 0x380; file_ptr = 0x346; next_ptr = 0
+[1m	FILE[0m with name 'a' at 0x33e; open_count = 1; next_ptr = 0
+[1m		PERM[0m (2, 0xff) at 0x368; file_ptr = 0x33e; next_ptr = 0x370
+[1m		PERM[0m (3, 0x01) at 0x370; file_ptr = 0x33e; next_ptr = 0
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x368); (1, 0x378); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] opening and accessing SM B files
+[clientB] I was called by 2 and I have id 3
+[0;32m	[sfs-ram] [0mINFO::[1msfs_ping[0m: Hi I was called by SM 3
+[0;32m	[sfs-ram] [0mINFO::and I am SM 1; now calling cfs_ping()
+		[0;36m[coffee] [0mHi from Coffee FS :-)
+		[0;36m[coffee] [0mNow printing flash id:	20 20 15 10 05 73 ff90 09 18 00 47 00 58 20 01 08 22 2a 02 3d 
+[clientB] opening bunch of files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'a'
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 3
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x33e; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x370
+[0;32m	[sfs-ram] [0mDEBUG::opening file in back-end
+[0;32m	[sfs-ram] [0mINFO::[1msfs_open[0m: file with name 'b'
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 3
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x346; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x380
+[0;32m	[sfs-ram] [0mDEBUG::opening file in back-end
+[clientB] accessing bunch of files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 2
+[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 3
+[0;32m	[sfs-ram] [0mINFO::[1msfs_putc[0m: write a char to file with fd 3
+[clientA] revoking B permissions
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::wanted permission entry for SM 3
+[0;32m	[sfs-ram] [0mDEBUG::and flags 0
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x33e; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x368
+[0;32m	[sfs-ram] [0mWARNING::ACL entry currently open; now closing fd 2
+[0;32m	[sfs-ram] [0mWARNING::removing ACL entry at address 0x370
+[0;32m	[sfs-ram] [0mINFO::[1msfs_chmod[0m: trying to modify ACL for file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::wanted permission entry for SM 3
+[0;32m	[sfs-ram] [0mDEBUG::and flags 0
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x346; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x378
+[0;32m	[sfs-ram] [0mWARNING::ACL entry currently open; now closing fd 3
+[0;32m	[sfs-ram] [0mWARNING::removing ACL entry at address 0x380
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+[1m	FILE[0m with name 'b' at 0x346; open_count = 1; next_ptr = 0x33e
+[1m		PERM[0m (2, 0xff) at 0x378; file_ptr = 0x346; next_ptr = 0
+[1m	FILE[0m with name 'a' at 0x33e; open_count = 1; next_ptr = 0
+[1m		PERM[0m (2, 0xff) at 0x368; file_ptr = 0x33e; next_ptr = 0
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x368); (1, 0x378); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] accessing B files (shouldn't work)
+[clientB] accessing bunch of files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 2
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+[0m[0;32m	[sfs-ram] [0mINFO::[1msfs_getc[0m: read a char from file with fd 3
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+[0m[0;32m	[sfs-ram] [0mINFO::[1msfs_putc[0m: write a char to file with fd 3
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+[0m[clientA] closing b files
+[clientB] closing bunch of files files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 2
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+[0m[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 3
+[1;31m[0;32m	[sfs-ram] [0m[1;31mERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+[0m[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+[1m	FILE[0m with name 'b' at 0x346; open_count = 1; next_ptr = 0x33e
+[1m		PERM[0m (2, 0xff) at 0x378; file_ptr = 0x346; next_ptr = 0
+[1m	FILE[0m with name 'a' at 0x33e; open_count = 1; next_ptr = 0
+[1m		PERM[0m (2, 0xff) at 0x368; file_ptr = 0x33e; next_ptr = 0
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x368); (1, 0x378); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] closing a files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 0
+[0;32m	[sfs-ram] [0mINFO::[1msfs_close[0m: file with fd 1
+[clientA] removing files
+[0;32m	[sfs-ram] [0mINFO::[1msfs_remove[0m: trying to remove file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'a'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x33e; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x368
+[0;32m	[sfs-ram] [0mDEBUG::now removing file in CFS back-end
+[0;32m	[sfs-ram] [0mINFO::[1msfs_remove[0m: trying to remove file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::checking permissions for file 'b'
+[0;32m	[sfs-ram] [0mDEBUG::and SM 2
+[0;32m	[sfs-ram] [0mDEBUG::found open_file struct at address 0x346; now searching ACL
+[0;32m	[sfs-ram] [0mDEBUG::found file_perm struct at address 0x378
+[0;32m	[sfs-ram] [0mDEBUG::now removing file in CFS back-end
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected ACL data structures:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+[0;32m	[sfs-ram] [0mINFO::[1msfs_dump[0m: dumping global protected file descriptor cache:
+	(0, 0x0); (1, 0x0); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] exiting
+[main] exiting
+-----------------

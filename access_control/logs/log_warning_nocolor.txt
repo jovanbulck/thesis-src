@@ -1,0 +1,66 @@
+
+---------------
+main started
+[main] I have id 0
+[clientA] I have id 2
+[clientA] creating a file
+[clientA] assigning B permissions
+[clientA] opening the file
+Coffee: Reserved 17 pages starting from 2159 for file a
+[clientA] creating a file
+[clientA] assigning B permissions
+[clientA] opening the file
+Coffee: Reserved 17 pages starting from 2176 for file b
+	----------------------------------------------------------------
+	FILE with name 'b' at 0x346; open_count = 1; next_ptr = 0x33e
+		PERM (2, 0xff) at 0x378; file_ptr = 0x346; next_ptr = 0x380
+		PERM (3, 0x03) at 0x380; file_ptr = 0x346; next_ptr = 0
+	FILE with name 'a' at 0x33e; open_count = 1; next_ptr = 0
+		PERM (2, 0xff) at 0x368; file_ptr = 0x33e; next_ptr = 0x370
+		PERM (3, 0x01) at 0x370; file_ptr = 0x33e; next_ptr = 0
+	----------------------------------------------------------------
+	(0, 0x368); (1, 0x378); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] opening and accessing SM B files
+[clientB] I was called by 2 and I have id 3
+[clientB] opening bunch of files
+[clientB] accessing bunch of files
+[clientA] revoking B permissions
+	[sfs-ram] WARNING::ACL entry currently open; now closing fd 2
+	[sfs-ram] WARNING::removing ACL entry at address 0x370
+	[sfs-ram] WARNING::ACL entry currently open; now closing fd 3
+	[sfs-ram] WARNING::removing ACL entry at address 0x380
+	----------------------------------------------------------------
+	FILE with name 'b' at 0x346; open_count = 2; next_ptr = 0x33e
+		PERM (2, 0xff) at 0x378; file_ptr = 0x346; next_ptr = 0
+	FILE with name 'a' at 0x33e; open_count = 2; next_ptr = 0
+		PERM (2, 0xff) at 0x368; file_ptr = 0x33e; next_ptr = 0
+	----------------------------------------------------------------
+	(0, 0x368); (1, 0x378); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] accessing B files (shouldn't work)
+[clientB] accessing bunch of files
+	[sfs-ram] ERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+	[sfs-ram] ERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+	[sfs-ram] ERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+[clientA] closing b files
+[clientB] closing bunch of files files
+	[sfs-ram] ERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+	[sfs-ram] ERROR::the provided file descriptor isn't valid ordoesn't belong to calling SM
+	----------------------------------------------------------------
+	FILE with name 'b' at 0x346; open_count = 2; next_ptr = 0x33e
+		PERM (2, 0xff) at 0x378; file_ptr = 0x346; next_ptr = 0
+	FILE with name 'a' at 0x33e; open_count = 2; next_ptr = 0
+		PERM (2, 0xff) at 0x368; file_ptr = 0x33e; next_ptr = 0
+	----------------------------------------------------------------
+	(0, 0x368); (1, 0x378); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] closing a files
+[clientA] removing files
+	[sfs-ram] ERROR::there are 1 remaining open file connections; close them first	[sfs-ram] ERROR::there are 1 remaining open file connections; close them first	----------------------------------------------------------------
+	FILE with name 'b' at 0x346; open_count = 1; next_ptr = 0x33e
+		PERM (2, 0xff) at 0x378; file_ptr = 0x346; next_ptr = 0
+	FILE with name 'a' at 0x33e; open_count = 1; next_ptr = 0
+		PERM (2, 0xff) at 0x368; file_ptr = 0x33e; next_ptr = 0
+	----------------------------------------------------------------
+	(0, 0x0); (1, 0x0); (2, 0x0); (3, 0x0); (4, 0x0); (5, 0x0); (6, 0x0); (7, 0x0); 
+[clientA] exiting
+[main] exiting
+-----------------

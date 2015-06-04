@@ -1,4 +1,4 @@
-# Scheduler Set-Up
+## Scheduler Set-Up
 
 - __scheduler.h__: the documented interface of the SM_sched module
 
