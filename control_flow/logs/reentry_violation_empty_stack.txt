@@ -1,0 +1,19 @@
+
+---------------
+[main] started, I have id 0
+
+###### CONTROL FLOW INTEGRITY HACK ######
+[enter_a] self_id = 1 ; caller_id = 0
+[a] set_avars done:
+	sad = 0x9258 ; sid = 4 ; vep = 0 ; yep = 1
+[a] now calling foo
+[enter_foo] self_id = 2 ; caller_id = 1
+[a_return_from_enter_foo] self_id = 1 ; caller_id = 2
+[enter_foo] self_id = 2 ; caller_id = 0
+[foo] now calling bar
+[enter_bar] self_id = 3 ; caller_id = 2
+[bar] now bypassing foo and calling a directly
+
+Hi from scheduler, I have id 4 and was called by 1
+[1;31m[sched] SM 1 reports an entry violation by SM 3
+[0mnow exiting...

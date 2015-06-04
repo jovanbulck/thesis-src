@@ -1,0 +1,166 @@
+
+---------------
+[main] started, I have id 0
+
+[main] set sm internal vars
+[main] initializing scheduler
+[sched] initializing data structures; sizeof (struct tcb) is 16
+[sched] registering new thread portal SM 1 with entry 0
+[sched] registering new thread portal SM 2 with entry 0
+[sched] dumping internal state; I have SM ID 4
+ready queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 1 and state [1mREG[0m at 0x4ee ; next_ptr = 0x4fe
+		sm_id = 1; pub_start = 0x9e4c ; entry = 0
+[1m	THREAD[0m with thr_id 2 and state [1mREG[0m at 0x4fe ; next_ptr = 0
+		sm_id = 2; pub_start = 0x9b34 ; entry = 0
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m (NULL)
+
+[main] dumping thr ids
+[0;36m	[sched] returning cur_thr_id zero to SM 1
+[0m[a] cur_thr_id is 0
+[0;36m	[sched] returning cur_thr_id zero to SM 1
+[0m[0;36m	[sched] returning cur_thr_id zero to SM 3
+[0m[bar] cur_thr_id is 0
+[0;36m	[sched] returning cur_thr_id zero to SM 3
+[0m[0;36m	[sched] returning cur_thr_id zero to SM 2
+[0m[foo] cur_thr_id is 0
+[0;36m	[sched] returning cur_thr_id zero to SM 2
+[0m[main] starting scheduler
+[0;33m[sched] starting scheduling of registered thread portal SMs[0m
+	[sched] now running logical thread 1:
+[1m	THREAD[0m with thr_id 1 and state [1mREG[0m at 0x4ee ; next_ptr = 0x4fe
+		sm_id = 1; pub_start = 0x9e4c ; entry = 0
+[0;36m	[sched] returning cur_thr_id 1 to SM 1
+[0m[a::1] enter_a
+[0;36m	[sched] returning cur_thr_id 1 to SM 1
+[0m[a::1] now calling bar
+[0;36m	[sched] returning cur_thr_id 1 to SM 1
+[0m[0;36m	[sched] returning cur_thr_id 1 to SM 3
+[0m[bar::1] enter_bar
+[0;36m	[sched] returning cur_thr_id 1 to SM 3
+[0m[bar::1] yielding...
+[0;36m	[sched] returning cur_thr_id 1 to SM 3
+[0m[0;33m[sched] SM 3 yielded, I will suspend logical thread 1 now
+[0m	[sched] now running logical thread 2:
+[1m	THREAD[0m with thr_id 2 and state [1mREG[0m at 0x4fe ; next_ptr = 0x4ee
+		sm_id = 2; pub_start = 0x9b34 ; entry = 0
+[0;36m	[sched] returning cur_thr_id 2 to SM 2
+[0m[foo::2] enter_foo
+[0;36m	[sched] returning cur_thr_id 2 to SM 2
+[0m[foo::2] dumping scheduler
+[0;36m	[sched] returning cur_thr_id 2 to SM 2
+[0m[sched] dumping internal state; I have SM ID 4
+ready queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 1 and state [1mREADY[0m at 0x4ee ; next_ptr = 0
+		sm_id = 3; pub_start = 0xab44 ; entry = 0xffff
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m with thr_id 2 and state [1mRUNNING[0m at 0x4fe ; next_ptr = 0x4ee
+		sm_id = 2; pub_start = 0x9b34 ; entry = 0
+
+[foo::2] now calling bar
+[0;36m	[sched] returning cur_thr_id 2 to SM 2
+[0m[0;36m	[sched] returning cur_thr_id 2 to SM 3
+[0m[0;36m	[sched] returning cur_thr_id 2 to SM 2
+[0m[0;33m[sched] SM 2 yielded, I will suspend logical thread 2 now
+[0m	[sched] now running logical thread 1:
+[1m	THREAD[0m with thr_id 1 and state [1mREADY[0m at 0x4ee ; next_ptr = 0x4fe
+		sm_id = 3; pub_start = 0xab44 ; entry = 0xffff
+[bar::1] returned from yield :-) Now dumping sched
+[0;36m	[sched] returning cur_thr_id 1 to SM 3
+[0m[bar::1] dumping scheduler
+[0;36m	[sched] returning cur_thr_id 1 to SM 3
+[0m[sched] dumping internal state; I have SM ID 4
+ready queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 2 and state [1mREADY[0m at 0x4fe ; next_ptr = 0
+		sm_id = 2; pub_start = 0x9b34 ; entry = 0xffff
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m with thr_id 1 and state [1mRUNNING[0m at 0x4ee ; next_ptr = 0x4fe
+		sm_id = 3; pub_start = 0xab44 ; entry = 0xffff
+
+[bar::1] returning
+[0;36m	[sched] returning cur_thr_id 1 to SM 3
+[0m[0;36m	[sched] returning cur_thr_id 1 to SM 1
+[0m[a::1] returned from bar, now returning to caller
+[0;36m	[sched] returning cur_thr_id 1 to SM 1
+[0m[0;33m[sched] SM 1 returned, I consider logical thread 1 finished now
+[0m	[sched] now running logical thread 2:
+[1m	THREAD[0m with thr_id 2 and state [1mREADY[0m at 0x4fe ; next_ptr = 0
+		sm_id = 2; pub_start = 0x9b34 ; entry = 0xffff
+[0;36m	[sched] returning cur_thr_id 2 to SM 3
+[0m[bar::2] enter_bar
+[0;36m	[sched] returning cur_thr_id 2 to SM 3
+[0m[bar::2] yielding...
+[0;36m	[sched] returning cur_thr_id 2 to SM 3
+[0m[0;33m[sched] SM 3 yielded, I will suspend logical thread 2 now
+[0m	[sched] now running logical thread 2:
+[1m	THREAD[0m with thr_id 2 and state [1mREADY[0m at 0x4fe ; next_ptr = 0
+		sm_id = 3; pub_start = 0xab44 ; entry = 0xffff
+[bar::2] returned from yield :-) Now dumping sched
+[0;36m	[sched] returning cur_thr_id 2 to SM 3
+[0m[bar::2] dumping scheduler
+[0;36m	[sched] returning cur_thr_id 2 to SM 3
+[0m[sched] dumping internal state; I have SM ID 4
+ready queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 1 and state [1mFINISHED[0m at 0x4ee ; next_ptr = 0
+		sm_id = 1; pub_start = 0xab44 ; entry = 0xffff
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m with thr_id 2 and state [1mRUNNING[0m at 0x4fe ; next_ptr = 0
+		sm_id = 3; pub_start = 0xab44 ; entry = 0xffff
+
+[bar::2] returning
+[0;36m	[sched] returning cur_thr_id 2 to SM 3
+[0m[0;36m	[sched] returning cur_thr_id 2 to SM 2
+[0m[foo::2] returned from enter_bar, now returning to caller
+[0;36m	[sched] returning cur_thr_id 2 to SM 2
+[0m[0;33m[sched] SM 2 returned, I consider logical thread 2 finished now
+[0m	[sched] all logical threads seem to have finished, returning...
+[0;33m[sched] All registered thread portal SMs have finished, returning...[0m
+[main] return from scheduler:
+[sched] dumping internal state; I have SM ID 4
+ready queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 2 and state [1mFINISHED[0m at 0x4fe ; next_ptr = 0x4ee
+		sm_id = 2; pub_start = 0xab44 ; entry = 0xffff
+[1m	THREAD[0m with thr_id 1 and state [1mFINISHED[0m at 0x4ee ; next_ptr = 0
+		sm_id = 1; pub_start = 0xab44 ; entry = 0xffff
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m (NULL)
+
+[main] dumping thr ids
+[0;36m	[sched] returning cur_thr_id zero to SM 1
+[0m[a] cur_thr_id is 0
+[0;36m	[sched] returning cur_thr_id zero to SM 1
+[0m[0;36m	[sched] returning cur_thr_id zero to SM 3
+[0m[bar] cur_thr_id is 0
+[0;36m	[sched] returning cur_thr_id zero to SM 3
+[0m[0;36m	[sched] returning cur_thr_id zero to SM 2
+[0m[foo] cur_thr_id is 0
+[0;36m	[sched] returning cur_thr_id zero to SM 2
+[0m
+[main] exiting
+-----------------

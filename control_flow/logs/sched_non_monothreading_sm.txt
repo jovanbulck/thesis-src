@@ -1,0 +1,107 @@
+
+---------------
+[main] started, I have id 0
+
+[main] initializing scheduler
+[sched] initializing data structures; sizeof (struct tcb) is 16
+[sched] dumping internal state; I have SM ID 1
+ready queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m (NULL)
+
+[sched] registering new thread portal SM 2 with entry 1
+[sched] registering new thread portal SM 3 with entry 0
+[sched] registering new thread portal SM 4 with entry 0
+[sched] dumping internal state; I have SM ID 1
+ready queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 1 and state [1mREG[0m at 0x5f2 ; next_ptr = 0x602
+		sm_id = 2; pub_start = 0x9fdc ; entry = 0x1
+[1m	THREAD[0m with thr_id 2 and state [1mREG[0m at 0x602 ; next_ptr = 0x612
+		sm_id = 3; pub_start = 0x99d0 ; entry = 0
+[1m	THREAD[0m with thr_id 3 and state [1mREG[0m at 0x612 ; next_ptr = 0
+		sm_id = 4; pub_start = 0x9c8c ; entry = 0
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m (NULL)
+
+[sched] starting scheduling of registered thread portal SMs
+[a] verifying the scheduler and initialising private vars
+[a] set_avars done:
+	sad = 0xa3ec ; sid = 1 ; vep = 5 ; yep = 4
+[a] dumping scheduler
+[sched] dumping internal state; I have SM ID 1
+ready queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 2 and state [1mREG[0m at 0x602 ; next_ptr = 0x612
+		sm_id = 3; pub_start = 0x99d0 ; entry = 0
+[1m	THREAD[0m with thr_id 3 and state [1mREG[0m at 0x612 ; next_ptr = 0
+		sm_id = 4; pub_start = 0x9c8c ; entry = 0
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m with thr_id 1 and state [1mRUNNING[0m at 0x5f2 ; next_ptr = 0x602
+		sm_id = 2; pub_start = 0x9fdc ; entry = 0x1
+
+[a] yielding...
+[0;33m[sched] SM 2 yielded, I will suspend logical thread 1 now
+[0m	[sched] now running logical thread:
+[1m	THREAD[0m with thr_id 2 and state [1mREG[0m at 0x602 ; next_ptr = 0x612
+		sm_id = 3; pub_start = 0x99d0 ; entry = 0
+[enter_foo] self_id = 3 ; caller_id = 1
+[foo] yielding...
+[0;33m[sched] SM 3 yielded, I will suspend logical thread 2 now
+[0m	[sched] now running logical thread:
+[1m	THREAD[0m with thr_id 3 and state [1mREG[0m at 0x612 ; next_ptr = 0x5f2
+		sm_id = 4; pub_start = 0x9c8c ; entry = 0
+[enter_bar] self_id = 4 ; caller_id = 1
+[bar] yielding...
+[0;33m[sched] SM 4 yielded, I will suspend logical thread 3 now
+[0m	[sched] now running logical thread:
+[1m	THREAD[0m with thr_id 1 and state [1mREADY[0m at 0x5f2 ; next_ptr = 0x602
+		sm_id = 2; pub_start = 0x9fdc ; entry = 0xffff
+[a] return from yield :-) Now returning to scheduler...
+[0;33m[sched] portal SM 2 returned, I consider logical thread 1 finished now
+[0m	[sched] now running logical thread:
+[1m	THREAD[0m with thr_id 2 and state [1mREADY[0m at 0x602 ; next_ptr = 0x612
+		sm_id = 3; pub_start = 0x99d0 ; entry = 0xffff
+[foo] return from yield :-) Now returning to scheduler...
+[foo] now calling bar
+[enter_bar] self_id = 4 ; caller_id = 3
+[bar] yielding...
+[0;33m[sched] SM 4 yielded, I will suspend logical thread 2 now
+[0m	[sched] now running logical thread:
+[1m	THREAD[0m with thr_id 3 and state [1mREADY[0m at 0x612 ; next_ptr = 0x602
+		sm_id = 4; pub_start = 0x9c8c ; entry = 0xffff
+[bar] return from yield :-) Now returning to scheduler...
+[bar] dumping scheduler
+[sched] dumping internal state; I have SM ID 1
+ready queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 2 and state [1mREADY[0m at 0x602 ; next_ptr = 0
+		sm_id = 4; pub_start = 0x9c8c ; entry = 0xffff
+	----------------------------------------------------------------
+done queue:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 1 and state [1mFINISHED[0m at 0x5f2 ; next_ptr = 0
+		sm_id = 2; pub_start = 0x9fdc ; entry = 0xffff
+	----------------------------------------------------------------
+current thread:
+[1m	THREAD[0m with thr_id 3 and state [1mRUNNING[0m at 0x612 ; next_ptr = 0x602
+		sm_id = 4; pub_start = 0x9c8c ; entry = 0xffff
+
+[foo_return_from_enter_bar] self_id = 3 ; caller_id = 4
+[0;33m[sched] portal SM 3 returned, I consider logical thread 3 finished now
+[0m	[sched] now running logical thread:
+[1m	THREAD[0m with thr_id 2 and state [1mREADY[0m at 0x602 ; next_ptr = 0
+		sm_id = 4; pub_start = 0x9c8c ; entry = 0xffff

@@ -1,0 +1,18 @@
+
+---------------
+[main] started, I have id 0
+
+###### CONTROL FLOW INTEGRITY HACK ######
+[enter_a] self_id = 1 ; caller_id = 0
+[a] set_avars done:
+	sad = 0x9440 ; sid = 4 ; vep = 0 ; yep = 1
+[a] now calling foo
+[enter_foo] self_id = 2 ; caller_id = 1
+[foo] now calling bar
+[enter_bar] self_id = 3 ; caller_id = 2
+[bar] now bypassing foo
+[a_return_from_enter_foo] self_id = 1 ; caller_id = 3
+[return_from_enter_a] self_id = 0 ; caller_id = 1
+
+[main] exiting
+-----------------

@@ -1,0 +1,36 @@
+
+---------------
+[main] started, I have id 0
+
+[main] initializing scheduler
+[sched] initializing data structures; sizeof (struct tcb) is 16
+[sched] registering new thread portal
+[sched] registering new thread portal
+[sched] dumping internal state; I have SM ID 1
+registered logical threads:
+	----------------------------------------------------------------
+[1m	THREAD[0m with thr_id 1 at 0x5ee ; next_ptr = 0x5fe
+		sm_id = 2; pub_start = 0x9c54 ; entry = 0x1
+[1m	THREAD[0m with thr_id 2 at 0x5fe ; next_ptr = 0
+		sm_id = 3; pub_start = 0x9828 ; entry = 0
+	----------------------------------------------------------------
+ready logical threads:
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+cur_thr_id = 0
+[sched] starting scheduling of registered thread portal SMs
+[a] verifying the scheduler and initialising private vars
+[a] set_avars done:
+	sad = 0x9f50 ; sid = 1 ; vep = 5 ; yep = 4
+[0;33m[sched] portal SM 2 returned. I consider logical thread 1 finished now
+[0m	[sched] now running registered logical thread 2 in portal protection domain SM 3
+[enter_foo] self_id = 3 ; caller_id = 1
+[foo] now calling bar
+[enter_bar] self_id = 4 ; caller_id = 3
+[foo_return_from_enter_bar] self_id = 3 ; caller_id = 4
+[0;33m[sched] portal SM 3 returned. I consider logical thread 2 finished now
+[0m	[sched] all logical threads seem to have finished, returning...
+[0;33m[sched] All registered thread portal SMs have finished execution, returning...[0m
+
+[main] exiting
+-----------------
