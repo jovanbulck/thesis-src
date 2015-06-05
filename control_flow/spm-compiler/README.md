@@ -18,10 +18,10 @@ scheduler has been registered internally and it is still loaded at the expected 
 
 SMs are made threading-aware by:
 
-    1. retrieving and comparing the current thrID on every entry
-    2. returning a magic value indicating success or busy (i.e. executing for another
-    logical thread) in r8 on every exit
-    3. checking r8 on every return and yield to the scheduler when the callee was busy
+   1. retrieving and comparing the current thrID on every entry
+   2. returning a magic value indicating success or busy (i.e. executing for another
+logical thread) in r8 on every exit
+   3. checking r8 on every return and yield to the scheduler when the callee was busy
 
 * __asm_sched__: contains the dedicated `sm_entry` and `sm_exit` stubs of the scheduler
 that glue everything together on top of the existing SM call/return scheme. On entry,
