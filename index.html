@@ -206,15 +206,110 @@ Contiki's Coffee file system</a>, optimised for embedded flash drives.
 <hr>
 
 <p> The output of the test program looks as follows:
-
 <center><img src="images/simple_test_output.png" alt="output of the test program"></center>
-
 </p>
 
 <h2>Access Control Layer Implementation</h2>
 
-tonen hoe de fe gewoon een wrapper is en gebruik maakt van sgcid
+<p>In this section we illustrate the
+<a href="sfs-front-end.html">implementation of the generic front-end</a> access
+control layer by means of short code snippets. The front-end is conceived as a wrapper
+implementation that associates an Access Control List (ACL)
+of <code>(smID, permission_flags)</code> pairs
+per logical file to validate the caller's permissions before passing the call to the
+back-end. Logical files are represented by a linked list of <code>OPEN_FILE</code>
+structs that each hold the file name and a linked list of <code>FILE_PERM</code> structs
+that make up the ACL. Once a file has been successfully opened, the corresponding
+<code>FILE_PERM</code> can be looked up quickly via a file-descriptor indexed array
+<code>fd_cache</code>.
+</p>
 
+<p>
+Access control is ensured through the two macros listed below. The <code>CHK_FD</code>
+macro checks whether a specified file descriptor is within bounds and belongs to a
+specified SM, whereas the <code>CHK_PERM</code> macro can be used to verify bitmask-permissions.
+</p>
+
+<hr>
+<!-- source code highlighting via tohtml.com -->
+
+<pre style='color:#000000;background:#ffffff;'><span style='color:#004a43; '>#</span><span style='color:#004a43; '>define</span><span style='color:#004a43; '> CHK_FD</span><span style='color:#808030; '>(</span><span style='color:#004a43; '>fd</span><span style='color:#808030; '>,</span><span style='color:#004a43; '> sm</span><span style='color:#808030; '>)</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;</span><span style='color:#004a43; '>if</span><span style='color:#004a43; '> </span><span style='color:#808030; '>(</span><span style='color:#808030; '>(</span><span style='color:#004a43; '>fd </span><span style='color:#808030; '>&lt;</span><span style='color:#004a43; '> 0 </span><span style='color:#808030; '>|</span><span style='color:#808030; '>|</span><span style='color:#004a43; '> fd </span><span style='color:#808030; '>></span><span style='color:#808030; '>=</span><span style='color:#004a43; '> MAX_NB_OPEN_FILES</span><span style='color:#808030; '>)</span><span style='color:#004a43; '> </span><span style='color:#808030; '>|</span><span style='color:#808030; '>|</span><span style='color:#004a43; '> </span><span style='color:#808030; '>!</span><span style='color:#004a43; '>fd_cache</span><span style='color:#808030; '>[</span><span style='color:#004a43; '>fd</span><span style='color:#808030; '>]</span><span style='color:#004a43; '> </span><span style='color:#808030; '>|</span><span style='color:#808030; '>|</span><span style='color:#004a43; '> fd_cache</span><span style='color:#808030; '>[</span><span style='color:#004a43; '>fd</span><span style='color:#808030; '>]</span><span style='color:#808030; '>-</span><span style='color:#808030; '>></span><span style='color:#004a43; '>sm_id </span><span style='color:#808030; '>!</span><span style='color:#808030; '>=</span><span style='color:#004a43; '> sm</span><span style='color:#808030; '>)</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;</span><span style='color:#808030; '>{</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;printerror_int_int</span><span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>the provided file descriptor </span><span style='color:#007997; '>%d</span><span style='color:#0000e6; '> isn't valid or </span><span style='color:#800000; '>"</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>doesn't belong to calling SM </span><span style='color:#007997; '>%d</span><span style='color:#800000; '>"</span><span style='color:#808030; '>,</span><span style='color:#004a43; '> fd</span><span style='color:#808030; '>,</span><span style='color:#004a43; '> sm</span><span style='color:#808030; '>)</span><span style='color:#808030; '>;</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;return FAILURE</span><span style='color:#808030; '>;</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;</span><span style='color:#808030; '>}</span>
+
+<span style='color:#004a43; '>#</span><span style='color:#004a43; '>define</span><span style='color:#004a43; '> CHK_PERM</span><span style='color:#808030; '>(</span><span style='color:#004a43; '>p_have</span><span style='color:#808030; '>,</span><span style='color:#004a43; '> p_want</span><span style='color:#808030; '>)</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>do </span><span style='color:#808030; '>{</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;</span><span style='color:#004a43; '>if</span><span style='color:#004a43; '> </span><span style='color:#808030; '>(</span><span style='color:#808030; '>(</span><span style='color:#004a43; '>p_have </span><span style='color:#808030; '>&amp;</span><span style='color:#004a43; '> p_want</span><span style='color:#808030; '>)</span><span style='color:#004a43; '> </span><span style='color:#808030; '>!</span><span style='color:#808030; '>=</span><span style='color:#004a43; '> p_want</span><span style='color:#808030; '>)</span><span style='color:#004a43; '> </span><span style='color:#808030; '>{</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;printerror_int_int</span><span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>permission check failed p_have=0x</span><span style='color:#007997; '>%x</span><span style='color:#0000e6; '> ; p_want = 0x</span><span style='color:#007997; '>%x</span><span style='color:#800000; '>"</span><span style='color:#808030; '>,</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;p_have</span><span style='color:#808030; '>,</span><span style='color:#004a43; '> p_want</span><span style='color:#808030; '>)</span><span style='color:#808030; '>;</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;&#xa0;return FAILURE</span><span style='color:#808030; '>;</span><span style='color:#004a43; '> \</span>
+<span style='color:#004a43; '>&#xa0;&#xa0;&#xa0;&#xa0;</span><span style='color:#808030; '>}</span><span style='color:#004a43; '> \</span>
+<span style='color:#808030; '>}</span><span style='color:#004a43; '> while</span><span style='color:#808030; '>(</span><span style='color:#004a43; '>0</span><span style='color:#808030; '>)</span>
+</pre>
+
+<hr>
+
+<p>
+The following code snippet defines the <code>sfs_getc()</code> implementation that
+uses the <code>sancus_get_caller_id()</code> hardware instruction and the above macros
+to enforce SM-grained logical file access control. The function returns <code>FAILURE</code>
+when access is denied and otherwise returns the result of the <code>cfs_read()</code>
+back-end call.
+</p>
+
+<hr>
+<!-- source code highlighting via tohtml.com -->
+
+<pre style='color:#000000;background:#ffffff;'><span style='color:#800000; font-weight:bold; '>int</span> SM_ENTRY<span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>sfs</span><span style='color:#800000; '>"</span><span style='color:#808030; '>)</span> sfs_getc<span style='color:#808030; '>(</span><span style='color:#800000; font-weight:bold; '>int</span> fd<span style='color:#808030; '>)</span>
+<span style='color:#800080; '>{</span>
+    sm_id caller_id <span style='color:#808030; '>=</span> sancus_get_caller_id<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   
+    CHK_FD<span style='color:#808030; '>(</span>fd<span style='color:#808030; '>,</span> caller_id<span style='color:#808030; '>)</span>
+    CHK_PERM<span style='color:#808030; '>(</span>fd_cache<span style='color:#808030; '>[</span>fd<span style='color:#808030; '>]</span><span style='color:#808030; '>-</span><span style='color:#808030; '>></span>flags<span style='color:#808030; '>,</span> SFS_READ<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+ 
+    <span style='color:#800000; font-weight:bold; '>return</span> <span style='color:#808030; '>(</span>cfs_read<span style='color:#808030; '>(</span>fd<span style='color:#808030; '>,</span> <span style='color:#808030; '>&amp;</span>buf<span style='color:#808030; '>,</span> <span style='color:#008c00; '>1</span><span style='color:#808030; '>)</span> <span style='color:#808030; '>></span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>)</span><span style='color:#800080; '>?</span> buf <span style='color:#800080; '>:</span> <span style='color:#7d0045; '>EOF</span><span style='color:#800080; '>;</span>
+<span style='color:#800080; '>}</span>
+</pre>
+
+<hr>
+
+<p>
+The following code snippet defines the implementation of the <code>sfs_chmod</code>
+function, which can be used to manipulate the SM-grained ACL of a logical file. As
+evident from the implementation below, only calling SMs that hold the special
+<code>SFS_ROOT</code> permission are allowed to change the associated ACL. The creator/owner
+of a logical file always holds this permission.
+The access rights for the caller are looked up in two phases: the
+<code>OPEN_FILE</code> struct for the given file name is first located and the
+associated ACL is thereafter traversed to locate the according <code>FILE_PERM</code>
+struct. The code snippet below furthermore shows how the special <code>SFS_NIL</code>
+permission is used to revoke existing access rights.
+</p>
+
+<hr>
+<!-- source code highlighting via tohtml.com -->
+
+<pre style='color:#000000;background:#ffffff;'><span style='color:#800000; font-weight:bold; '>int</span> SM_ENTRY<span style='color:#808030; '>(</span><span style='color:#800000; '>"</span><span style='color:#0000e6; '>sfs</span><span style='color:#800000; '>"</span><span style='color:#808030; '>)</span> sfs_chmod<span style='color:#808030; '>(</span>filename_t name<span style='color:#808030; '>,</span> sm_id id<span style='color:#808030; '>,</span> <span style='color:#800000; font-weight:bold; '>int</span> perm_flags<span style='color:#808030; '>)</span>
+<span style='color:#800080; '>{</span>
+    sm_id caller_id <span style='color:#808030; '>=</span> sancus_get_caller_id<span style='color:#808030; '>(</span><span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+
+    <span style='color:#696969; '>// only root can chmod</span>
+    <span style='color:#800000; font-weight:bold; '>struct</span> FILE_PERM <span style='color:#808030; '>*</span>p_caller<span style='color:#800080; '>;</span>
+    <span style='color:#800000; font-weight:bold; '>if</span> <span style='color:#808030; '>(</span>two_phase_lookup<span style='color:#808030; '>(</span>name<span style='color:#808030; '>,</span> SFS_ROOT<span style='color:#808030; '>,</span> id<span style='color:#808030; '>,</span> <span style='color:#808030; '>&amp;</span>p_caller<span style='color:#808030; '>)</span> <span style='color:#808030; '>&lt;</span> <span style='color:#008c00; '>0</span><span style='color:#808030; '>)</span>
+        <span style='color:#800000; font-weight:bold; '>return</span> FAILURE<span style='color:#800080; '>;</span>
+    
+    <span style='color:#800000; font-weight:bold; '>if</span> <span style='color:#808030; '>(</span>perm_flags <span style='color:#808030; '>=</span><span style='color:#808030; '>=</span> SFS_NIL<span style='color:#808030; '>)</span>
+        <span style='color:#800000; font-weight:bold; '>return</span> revoke_acl<span style='color:#808030; '>(</span>p_caller<span style='color:#808030; '>-</span><span style='color:#808030; '>></span>file<span style='color:#808030; '>,</span> id<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+   
+    <span style='color:#800000; font-weight:bold; '>return</span> add_acl<span style='color:#808030; '>(</span>p_caller<span style='color:#808030; '>-</span><span style='color:#808030; '>></span>file<span style='color:#808030; '>,</span> id<span style='color:#808030; '>,</span> perm_flags<span style='color:#808030; '>)</span><span style='color:#800080; '>;</span>
+<span style='color:#800080; '>}</span>
+</pre>
+
+<hr>
 </div>
 </body>
 </html> 
