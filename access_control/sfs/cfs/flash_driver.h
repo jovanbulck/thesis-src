@@ -9,7 +9,7 @@
 #include <sancus_support/spi.h>
 
 #ifdef FLASH_DEBUG
-    #include "../../../common.h"
+    #include "../../common.h"
     #define FD CYAN "\t[flash-driver] " NONE
     #define printd(str) printdebug(FD str)
 #endif

@@ -7,7 +7,7 @@
 
 #ifndef NODEBUG
     // include generic printdebug macros
-    #include "../../common.h"
+    #include "../common.h"
 #else
     #define puts(str)
     #define printf_int(str, i)

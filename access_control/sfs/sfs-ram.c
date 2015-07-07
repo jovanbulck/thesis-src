@@ -462,11 +462,11 @@ void SM_ENTRY("sfs") sfs_dump(void)
     
     for (i = 0, f = free_file_list; f != NULL; i++, f = f->next)
         ;
-    printf_int_int("free file list size is %d max is %d\n", i, MAX_NB_FILES);
+    printdii_debug("free file list size is %d max is %d\n", i, MAX_NB_FILES);
     
     for (i = 0, p = free_perm_list; p!=NULL; i++, p = p->next)
         ;
-    printf_int_int("free perm list size is %d max is %d\n", i, MAX_NB_PERMS);
+    printdii_debug("free perm list size is %d max is %d\n", i, MAX_NB_PERMS);
 
 
 #ifdef CFS_DUMP    
@@ -604,7 +604,7 @@ int SM_ENTRY("sfs") sfs_getc(int fd)
     TSC2("cfs_read_one_char")
 
     printdi_debug("cfs_read returned %d", rv);
-    return (rv >= 0)? public_buf : EOF;
+    return (rv > 0)? public_buf : EOF;
 }
 
 int SM_ENTRY("sfs") sfs_putc(int fd, unsigned char c)
@@ -622,7 +622,7 @@ int SM_ENTRY("sfs") sfs_putc(int fd, unsigned char c)
     TSC2("cfs_write_one_char")
 
     printdi_debug("cfs_write returned %d", rv);
-    return (rv >= 0)? public_buf : EOF;
+    return (rv > 0)? public_buf : EOF;
 }
 
 int SM_ENTRY("sfs") sfs_seek(int fd, int offset, int origin)
