@@ -44,7 +44,7 @@ DECLARE_SM(sfs, 0x1234);
 // ######################### GLOBAL PROTECTED DATA STRUCTURES #####################
 
 // used to pass a character pointer to the uprotected back-end file system
-char public_buf;
+char buf;
 // used to translate the filename_t to a string ptr for the CFS backend
 char public_str[2];
 
@@ -600,11 +600,11 @@ int SM_ENTRY("sfs") sfs_getc(int fd)
     CHK_PERM(fd_cache[fd]->flags, SFS_READ);
 
     TSC1()
-    int rv = cfs_read(fd, &public_buf, 1);
+    int rv = cfs_read(fd, &buf, 1);
     TSC2("cfs_read_one_char")
 
     printdi_debug("cfs_read returned %d", rv);
-    return (rv > 0)? public_buf : EOF;
+    return (rv > 0)? buf : EOF;
 }
 
 int SM_ENTRY("sfs") sfs_putc(int fd, unsigned char c)
@@ -617,12 +617,12 @@ int SM_ENTRY("sfs") sfs_putc(int fd, unsigned char c)
     CHK_PERM(fd_cache[fd]->flags, SFS_WRITE);
     
     TSC1()
-    public_buf = c; // this is part of the back-end function call overhead...
-    int rv = cfs_write(fd, &public_buf, 1);
+    buf = c; // this is part of the back-end function call overhead...
+    int rv = cfs_write(fd, &buf, 1);
     TSC2("cfs_write_one_char")
 
     printdi_debug("cfs_write returned %d", rv);
-    return (rv > 0)? public_buf : EOF;
+    return (rv > 0)? buf : EOF;
 }
 
 int SM_ENTRY("sfs") sfs_seek(int fd, int offset, int origin)
